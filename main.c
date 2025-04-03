@@ -4,7 +4,7 @@
 
 int main() {
     WavFile *wav_file = (WavFile *) malloc(sizeof(WavFile));
-    if (read_file(wav_file, "recording.wav") != 0) {
+    if (read_file(wav_file, "sm8.wav") != 0) {
         printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
         return 1;
     }

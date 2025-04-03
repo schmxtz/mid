@@ -44,6 +44,8 @@ typedef struct {
 } SubChunkBuffer;
 
 int read_file(WavFile *wav_file, char *file_name);
-int read_data(FMTSubChunk *fmt_sub_chunk, DataSubChunk *data_sub_chunk, FILE *file);
+int read_data(FMTSubChunk *fmt_sub_chunk, DataSubChunk *data_sub_chunk, uint8_t *buffer);
+int read_data_one_byte(FMTSubChunk *fmt_sub_chunk, DataSubChunk *data_sub_chunk, uint8_t *buffer);
+int read_data_two_byte(FMTSubChunk *fmt_sub_chunk, DataSubChunk *data_sub_chunk, uint8_t *buffer);
 
 #endif
