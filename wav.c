@@ -30,13 +30,43 @@ int read_file(WavFile *wav_file, char *file_name) {
     wav_file->data_sub_chunk->data = (float *) malloc(sizeof(float) * wav_file->data_sub_chunk->num_sample);
     if (wav_file->data_sub_chunk->data == NULL) return 1;
 
-    int result = read_data(wav_file->fmt_sub_chunk, wav_file->data_sub_chunk, file);
+    /* TOOD: Check if reading into smaller buffers is more efficient, this might be 
+        very naive, especially considering the file size of some WAVE files */
+    uint8_t buffer = (uint8_t *) malloc(sizeof(uint8_t) * wav_file->data_sub_chunk->sub_chunk_size);
+    if (buffer == NULL) return 1;
     fclose(file);
+
+    int result = read_data(wav_file->fmt_sub_chunk, wav_file->data_sub_chunk, buffer);
     return result;
 }
 
-int read_data(FMTSubChunk *fmt_sub_chunk, DataSubChunk *data_sub_chunk, FILE *file) {
-    printf("%d\n", fmt_sub_chunk->bits_per_sample); 
+int read_data(FMTSubChunk *fmt_sub_chunk, DataSubChunk *data_sub_chunk, uint8_t *buffer) {
+    switch(fmt_sub_chunk->bits_per_sample) {
+        case 8:
+            return read_data_one_byte(fmt_sub_chunk, data_sub_chunk, buffer);
+        case 16:
+            break;
+        case 24:
+            break;
+        case 32:
+            break;
+        default:
+            return 1;
+    }
+    
+
+    return 0;
+}
+
+int read_data_one_byte(FMTSubChunk *fmt_sub_chunk, DataSubChunk *data_sub_chunk, uint8_t *buffer) {
+    int32_t num_sample = data_sub_chunk->num_sample;
+    int16_t num_channel = fmt_sub_chunk->num_channel;
+    for (int i = 0; i < num_sample; i++) {
+        for (int j = 0; j < num_channel; j++) {
+
+        }        
+    }
+
 
     return 0;
 }
