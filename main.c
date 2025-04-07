@@ -2,12 +2,15 @@
 
 #include "wav.c"
 
-int main() {
+int main()
+{
     WavFile *wav_file = (WavFile *) malloc(sizeof(WavFile));
-    if (read_file(wav_file, "sm8.wav") != 0) {
+    if (read_file(wav_file, "16m.wav") != 0) {
         printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
         return 1;
     }
+
+
 
     // printf("%.4s\n", wav_file->riff_chunk->chunk_id);
     // printf("%.4s\n", wav_file->riff_chunk->chunk_format);
