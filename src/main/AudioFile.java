@@ -1,13 +1,12 @@
 package main;
 
 import java.io.File;
-import java.io.IOException;
+
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFileFormat.Type;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioFile {
 	private String fileName;
@@ -39,21 +38,21 @@ public class AudioFile {
 		this.fileName = fileName;
 	}
 	
-	private void handleWaveFile(File audioFile, AudioFileFormat audioFileFormat) throws UnsupportedAudioFileException, IOException {
+	private void handleWaveFile(File audioFile, AudioFileFormat audioFileFormat) throws Exception {
 		System.out.println(audioFileFormat.toString());
 		AudioFormat audioFormat = audioFileFormat.getFormat();
-		int bufferSize = 8192 - (8192 % audioFormat.getFrameSize());
-		System.out.println(audioFileFormat.getFormat().getSampleSizeInBits());
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
-		byte data[] = new byte[8192];
+		byte data[] = new byte[getBufferSize(audioFormat)];
 		System.out.println(audioInputStream.available());
 	}
 	
-	private void getBufferSize(AudioFormat audioFormat) throws Exception {
+	private int getBufferSize(AudioFormat audioFormat) throws Exception {
 		int frameSize = audioFormat.getFrameSize();
 		if (frameSize == AudioSystem.NOT_SPECIFIED) {
-			
+			frameSize = calculateFrameSize(audioFormat);
 		}
+		int remainder = 8192 % frameSize;
+		return (remainder == 0) ? 8192 : 8192 - remainder;
 	}
 	
 	private int calculateFrameSize(AudioFormat audioFormat) throws Exception {
