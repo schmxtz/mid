@@ -44,7 +44,6 @@ public class AudioFile {
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
 		byte data[] = new byte[getBufferSize(audioFormat)];
 		System.out.println(audioInputStream.available());
-		
 	}
 	
 	private int getBufferSize(AudioFormat audioFormat) throws Exception {
