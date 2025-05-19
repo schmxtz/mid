@@ -10,6 +10,7 @@ import javax.sound.sampled.AudioSystem;
 
 public class AudioFile {
 	private String fileName;
+	float data[];
 	
 	public AudioFile() {
 	}
@@ -39,11 +40,17 @@ public class AudioFile {
 	}
 	
 	private void handleWaveFile(File audioFile, AudioFileFormat audioFileFormat) throws Exception {
-		System.out.println(audioFileFormat.toString());
 		AudioFormat audioFormat = audioFileFormat.getFormat();
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
-		byte data[] = new byte[getBufferSize(audioFormat)];
-		System.out.println(audioInputStream.available());
+		int numberOfSamples = audioFileFormat.getFrameLength();
+		this.data = new float[numberOfSamples];
+		byte dataBuffer[] = new byte[getBufferSize(audioFormat)];
+		int sampleIndex = 0;
+		while (audioInputStream.available() > 0 && sampleIndex < numberOfSamples) {
+			int bytesRead = audioInputStream.read(dataBuffer);
+//			for (int )
+			
+		}
 	}
 	
 	private int getBufferSize(AudioFormat audioFormat) throws Exception {
